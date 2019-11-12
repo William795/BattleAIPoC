@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		92114617237A151F005507E8 /* CategoryBitMasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92114616237A151F005507E8 /* CategoryBitMasks.swift */; };
+		92114619237A15F1005507E8 /* Zpositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92114618237A15F1005507E8 /* Zpositions.swift */; };
 		928F3082235FA54D00F823DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928F3081235FA54D00F823DE /* AppDelegate.swift */; };
 		928F3088235FA54D00F823DE /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928F3087235FA54D00F823DE /* GameScene.swift */; };
 		928F308A235FA54D00F823DE /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928F3089235FA54D00F823DE /* GameViewController.swift */; };
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		92114616237A151F005507E8 /* CategoryBitMasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBitMasks.swift; sourceTree = "<group>"; };
+		92114618237A15F1005507E8 /* Zpositions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zpositions.swift; sourceTree = "<group>"; };
 		928F307E235FA54D00F823DE /* basicBattleAIPoC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = basicBattleAIPoC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		928F3081235FA54D00F823DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		928F3087235FA54D00F823DE /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -78,6 +82,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9211461A237A15F7005507E8 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				92114616237A151F005507E8 /* CategoryBitMasks.swift */,
+				92114618237A15F1005507E8 /* Zpositions.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		928F3075235FA54D00F823DE = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +117,7 @@
 				928F3093235FA55100F823DE /* Info.plist */,
 				928F30B5235FA56F00F823DE /* Resources */,
 				928F3087235FA54D00F823DE /* GameScene.swift */,
+				9211461A237A15F7005507E8 /* Settings */,
 				92FF80FE2362367A0084E9A2 /* SKSprites.swift */,
 				928F3089235FA54D00F823DE /* GameViewController.swift */,
 				928F308B235FA54D00F823DE /* Main.storyboard */,
@@ -271,6 +285,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				928F3088235FA54D00F823DE /* GameScene.swift in Sources */,
+				92114619237A15F1005507E8 /* Zpositions.swift in Sources */,
+				92114617237A151F005507E8 /* CategoryBitMasks.swift in Sources */,
 				928F308A235FA54D00F823DE /* GameViewController.swift in Sources */,
 				92FF80FF2362367A0084E9A2 /* SKSprites.swift in Sources */,
 				928F3082235FA54D00F823DE /* AppDelegate.swift in Sources */,
