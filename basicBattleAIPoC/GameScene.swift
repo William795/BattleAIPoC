@@ -14,6 +14,7 @@ class GameScene: SKScene {
     var enemy: SKSpriteNode!
     var player: SKSpriteNode!
     var tank: SKSpriteNode!
+    var shield: SKSpriteNode!
     var mage: SKSpriteNode!
     var ranger: SKSpriteNode!
     
@@ -23,6 +24,7 @@ class GameScene: SKScene {
     }
     
     func setUpScene() {
+        physicsSetUp()
         setUpAllys()
         createEnemy()
         makeButtons()
@@ -39,7 +41,7 @@ class GameScene: SKScene {
     
     func physicsSetUp() {
         physicsWorld.contactDelegate = self
-//        physicsWorld.gravity = CGVector(dx: 1, dy: 1)
+        physicsWorld.gravity = CGVector(dx: 0, dy: 0)
     }
     
     func setUpAllys() {
@@ -79,8 +81,10 @@ class GameScene: SKScene {
         addChild(enemy)
     }
     
-    func createEnemyAttack(that shootAlly: CGPoint) {
-        
+    func createEnemyAttack(at enemyPosition: CGPoint) {
+        let attack = SKSpriteNode().makeEnemyAttack(atLocation: enemyPosition)
+        attack.physicsBody?.velocity = CGVector(dx: tank.position.x - enemyPosition.x, dy: tank.position.y - enemyPosition.y)
+        addChild(attack)
     }
     
     func createAllyAtack(at AllyPosition: CGPoint) {
@@ -88,6 +92,32 @@ class GameScene: SKScene {
         attack.physicsBody?.velocity = CGVector(dx: enemy.position.x - AllyPosition.x, dy: enemy.position.y - AllyPosition.y)
         
         addChild(attack)
+    }
+    
+    func createShield() {
+        let shieldBlueprint = SKSpriteNode().makeTankShield(atTank: tank.position)
+        shield = shieldBlueprint
+        
+        addChild(shield)
+    }
+    
+    func swapTankFormation() {
+        if shield != nil {
+            if shield.parent == self {
+                shield.removeFromParent()
+                //tank goes to attack
+                return
+            }
+        }
+        createShield()
+    }
+    
+    func swapRangerFormation() {
+        //formations be dmg/stealth
+    }
+    
+    func swapMageFormation() {
+        //formations be dmg/healing
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -101,27 +131,29 @@ class GameScene: SKScene {
             case "button1":
                 //tank swap
                 print("button1T")
-                createAllyAtack(at: tank.position)
+                swapTankFormation()
             case "button2":
                 //mage swap
                 print("button2M")
-                createAllyAtack(at: mage.position)
             case "button3":
                 //rangerswap
                 print("button3R")
-                createAllyAtack(at: ranger.position)
             case "tank":
                 //speed up
                 print("tank")
+                createAllyAtack(at: tank.position)
             case "ranger":
                 //speed up
                 print("ranger")
+                createAllyAtack(at: ranger.position)
             case "mage":
                 //speed up
                 print("mage")
+                createAllyAtack(at: mage.position)
             case "enemy":
                 //slow down
                 print("enemy")
+                createEnemyAttack(at: enemy.position)
             default:
                 print("Nothing")
             }
@@ -137,11 +169,11 @@ extension GameScene: SKPhysicsContactDelegate {
         
         switch contactMask {
         case PhysicsCategorys.ally | PhysicsCategorys.enemyAttack:
-            return
+            print("Ally hit")
         case PhysicsCategorys.allyAttack | PhysicsCategorys.enemy:
-            return
+            print("enemy hit")
         default:
-            return
+            print("unspecified contact made")
         }
     }
 }
