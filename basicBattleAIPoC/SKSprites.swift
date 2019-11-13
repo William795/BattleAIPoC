@@ -79,6 +79,7 @@ extension SKSpriteNode {
     
     func makeEnemyAttack(atLocation: CGPoint) -> SKSpriteNode {
         let attack = SKSpriteNode()
+        attack.name = "enemyAttack"
         attack.color = .darkGray
         attack.size = CGSize(width: baseSize.width / 4, height: baseSize.height / 4)
         attack.position = atLocation
@@ -92,6 +93,7 @@ extension SKSpriteNode {
     
     func makeAllyAttack(atLocation: CGPoint) -> SKSpriteNode {
         let attack = SKSpriteNode()
+        attack.name = "allyAttack"
         attack.color = .cyan
         attack.size = CGSize(width: baseSize.width / 4, height: baseSize.height / 8)
         attack.position = atLocation

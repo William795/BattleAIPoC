@@ -120,6 +120,14 @@ class GameScene: SKScene {
         //formations be dmg/healing
     }
     
+    func enemyDamaged() {
+        //stuff and things
+    }
+    
+    func allyDamaged(whoGotHit: SKSpriteNode) {
+        
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         var pos: CGPoint!
@@ -169,9 +177,18 @@ extension GameScene: SKPhysicsContactDelegate {
         
         switch contactMask {
         case PhysicsCategorys.ally | PhysicsCategorys.enemyAttack:
+            if let attack = contact.bodyA.node?.name == "enemyAttack" ? contact.bodyA.node as? SKSpriteNode : contact.bodyB.node as? SKSpriteNode {
+                attack.run(SKAction.fadeOut(withDuration: 0.5))
+                attack.removeFromParent()
+            }
             print("Ally hit")
         case PhysicsCategorys.allyAttack | PhysicsCategorys.enemy:
             print("enemy hit")
+            if let attack = contact.bodyA.node?.name == "allyAttack" ? contact.bodyA.node as? SKSpriteNode : contact.bodyB.node as? SKSpriteNode {
+                enemyDamaged()
+                attack.run(SKAction.fadeOut(withDuration: 0.5))
+                attack.removeFromParent()
+            }
         default:
             print("unspecified contact made")
         }
