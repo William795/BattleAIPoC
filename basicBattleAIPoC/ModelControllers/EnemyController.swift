@@ -16,15 +16,18 @@ class EnemyController {
     
     //create enemy
     
-    //read current enemy phase
+    var enemy = Enemy(health: 50, attackDamage: 1, attackSpeed: 1, phase: 1)
     
-    /* update enemy
-     - take damage
-     - change attack pattern
-     - slow down effect used
-     
-    */
     
-    //delete enemy when defeated
+    func nextPhase() {
+        
+    }
     
+    func takeDamage() {
+        
+    }
+    
+    func enemyDefeatedCheck() {
+        
+    }
 }

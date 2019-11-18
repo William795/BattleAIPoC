@@ -14,18 +14,26 @@ class AllyController {
     
     //information for each ally and player
     
+    var player = Ally(health: 2, attackDamage: 1, attackSpeed: 1, stance: false)
+    var tank = Ally(health: 5, attackDamage: 1, attackSpeed: 1, stance: false)
+    var ranger = Ally(health: 3, attackDamage: 1, attackSpeed: 2, stance: false)
+    var mage = Ally(health: 3, attackDamage: 1, attackSpeed: 1, stance: false)
+    
     //CRUD
     
     //create allys
     
-    //read current formation
+    func swapFormation() {
+        
+    }
     
-    /*update allys
-     - take damage
-     - heal
-     - swap formation
-     
-    */
+    func takeDamage() {
+        
+    }
+    
+    func heal() {
+        
+    }
     
     //delete
 }

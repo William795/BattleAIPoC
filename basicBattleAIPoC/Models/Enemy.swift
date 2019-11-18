@@ -8,7 +8,7 @@
 
 import Foundation
 
-class enemy {
+class Enemy {
     var health: Int
     var attackDamage: Int
     var attackSpeed: Int
