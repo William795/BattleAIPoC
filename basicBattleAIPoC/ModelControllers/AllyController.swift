@@ -19,6 +19,8 @@ class AllyController {
     var ranger = Ally(health: 3, attackDamage: 1, attackSpeed: 2, stance: false)
     var mage = Ally(health: 3, attackDamage: 1, attackSpeed: 1, stance: false)
     
+    var tankShield = Ally(health: 3, attackDamage: 0, attackSpeed: 0, stance: false)
+    
     //CRUD
     
     //create allys

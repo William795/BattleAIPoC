@@ -54,6 +54,7 @@ extension SKSpriteNode {
     
     func makePlayer() -> SKSpriteNode {
         let player = SKSpriteNode()
+        player.name = "player"
         player.color = .gray
         player.size = baseSize
         player.position = CGPoint(x: screenSize.midX / 4, y: screenSize.midY)

@@ -110,6 +110,7 @@ class GameScene: SKScene {
             }
         }
         createShield()
+        AllyController.shared.tankShield.health = 3
     }
     
     func swapRangerFormation() {
@@ -124,8 +125,35 @@ class GameScene: SKScene {
         //stuff and things
     }
     
-    func allyDamaged(whoGotHit: SKSpriteNode) {
-        
+    func gameOverCheck() {
+        // check for health of player and enemy and go from there
+    }
+    
+    func allyDamaged(ally: SKSpriteNode) {
+        switch ally.name {
+        case "tank":
+            print("tank hit")
+            AllyController.shared.tank.health -= 1
+        case "ranger":
+            print("ranger hit")
+            AllyController.shared.ranger.health -= 1
+        case "mage":
+            print("mage hit")
+            AllyController.shared.mage.health -= 1
+        case "player":
+            print("player hit")
+            AllyController.shared.player.health -= 1
+        case "shield":
+            print("shield hit")
+            AllyController.shared.tankShield.health -= 1
+            if AllyController.shared.tankShield.health < 1 {
+                shield.removeFromParent()
+                //TODO - tank is stunned
+            }
+        default:
+            print("allydamaged func hit default")
+            return
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -181,6 +209,11 @@ extension GameScene: SKPhysicsContactDelegate {
                 attack.run(SKAction.fadeOut(withDuration: 0.5))
                 attack.removeFromParent()
             }
+            if let ally = contact.bodyA.node?.name == "enemyAttack" ? contact.bodyB.node as? SKSpriteNode : contact.bodyA.node as? SKSpriteNode {
+                allyDamaged(ally: ally)
+                gameOverCheck()
+            }
+            
             print("Ally hit")
         case PhysicsCategorys.allyAttack | PhysicsCategorys.enemy:
             print("enemy hit")
@@ -188,6 +221,8 @@ extension GameScene: SKPhysicsContactDelegate {
                 enemyDamaged()
                 attack.run(SKAction.fadeOut(withDuration: 0.5))
                 attack.removeFromParent()
+                EnemyController.shared.enemy.health -= 1
+                gameOverCheck()
             }
         default:
             print("unspecified contact made")
