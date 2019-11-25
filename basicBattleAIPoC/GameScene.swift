@@ -21,6 +21,7 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         setUpScene()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(battleTimerTick), name: Notification.Name.battleTimer, object: nil)
     }
     
     func setUpScene() {
@@ -42,6 +43,10 @@ class GameScene: SKScene {
     func physicsSetUp() {
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+    }
+    
+    @objc func battleTimerTick() {
+        rangerAttack()
     }
     
     func setUpAllys() {
@@ -119,6 +124,10 @@ class GameScene: SKScene {
     
     func swapMageFormation() {
         //formations be dmg/healing
+    }
+    
+    func rangerAttack() {
+        createAllyAtack(at: ranger.position)
     }
     
     func enemyDamaged() {
