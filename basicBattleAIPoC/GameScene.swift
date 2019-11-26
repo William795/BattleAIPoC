@@ -21,7 +21,6 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         setUpScene()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(battleTimerTick), name: Notification.Name.battleTimer, object: nil)
     }
     
     func setUpScene() {
@@ -45,15 +44,12 @@ class GameScene: SKScene {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
     }
     
-    @objc func battleTimerTick() {
-        rangerAttack()
-    }
-    
     func setUpAllys() {
         createMage()
         createTank()
         createRanger()
         createPlayer()
+        
     }
     
     func createTank() {
@@ -119,7 +115,14 @@ class GameScene: SKScene {
     }
     
     func swapRangerFormation() {
-        //formations be dmg/stealth
+        //formations be passive attacks / rapid attaks
+        if AllyController.shared.ranger.stance == true {
+            AllyController.shared.ranger.attackSpeed += 3
+            AllyController.shared.ranger.stance = false
+        } else {
+            AllyController.shared.ranger.attackSpeed -= 3
+            AllyController.shared.ranger.stance = true
+        }
     }
     
     func swapMageFormation() {
@@ -127,7 +130,14 @@ class GameScene: SKScene {
     }
     
     func rangerAttack() {
-        createAllyAtack(at: ranger.position)
+        let rangerAttackTimer = SKAction.wait(forDuration: AllyController.shared.ranger.attackSpeed)
+        let attack = SKAction.run {
+            self.createAllyAtack(at: self.ranger.position)
+        }
+        let sequence = SKAction.sequence([rangerAttackTimer, attack])
+        run(SKAction.repeat(sequence, count: 3))
+        
+        print("rangerAttack")
     }
     
     func enemyDamaged() {
@@ -180,9 +190,11 @@ class GameScene: SKScene {
             case "button2":
                 //mage swap
                 print("button2M")
+                swapMageFormation()
             case "button3":
                 //rangerswap
                 print("button3R")
+                swapRangerFormation()
             case "tank":
                 //speed up
                 print("tank")
@@ -191,6 +203,7 @@ class GameScene: SKScene {
                 //speed up
                 print("ranger")
                 createAllyAtack(at: ranger.position)
+                rangerAttack()
             case "mage":
                 //speed up
                 print("mage")

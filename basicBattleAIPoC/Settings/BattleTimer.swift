@@ -8,21 +8,21 @@
 
 import Foundation
 
-class BattleTimer {
-    
-    static let shared = BattleTimer()
-    
-    var timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (Timer) in
-        NotificationCenter.default.post(name: .battleTimer, object: nil)
-        print("timer on")
-        
-    })
-    
-    func startTimer() {
-        timer.fire()
-    }
-    
-    func stopTimet() {
-        timer.invalidate()
-    }
-}
+//class BattleTimer {
+//
+//    static let shared = BattleTimer()
+//    
+//    var timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: { (Timer) in
+//        NotificationCenter.default.post(name: .battleTimer, object: nil)
+//        print("timer on")
+//
+//    })
+//
+//    func startTimer() {
+//        timer.fire()
+//    }
+//
+//    func stopTimet() {
+//        timer.invalidate()
+//    }
+//}
