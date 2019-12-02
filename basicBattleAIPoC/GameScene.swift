@@ -114,6 +114,21 @@ class GameScene: SKScene {
         addChild(shield)
     }
     
+    func makeHealEffect() {
+        let allyArray: [SKSpriteNode] = [tank, mage, ranger, player]
+        let fadeOut = SKAction.fadeOut(withDuration: 1)
+        let floatUp = SKAction.moveBy(x: 0, y: 50, duration: 1)
+        
+        let group = SKAction.group([floatUp, fadeOut])
+        
+        for ally in allyArray {
+            let effect = SKSpriteNode().makeHealEffect(atAlly: ally.position)
+            effect.run(group)
+            
+            addChild(effect)
+        }
+    }
+    
     func swapTankFormation() {
         if shield != nil {
             if shield.parent == self {
@@ -138,7 +153,11 @@ class GameScene: SKScene {
     }
     
     func swapMageFormation() {
-        //formations be dmg/healing
+        if AllyController.shared.mage.stance == false {
+            AllyController.shared.mage.stance = true
+        } else {
+            AllyController.shared.mage.stance = false
+        }
     }
     
     func tankAttack() {
@@ -151,12 +170,23 @@ class GameScene: SKScene {
     }
     
     func mageAttack() {
+        let isHealing = AllyController.shared.mage.stance
+        
         if AllyController.shared.mage.attackCoolDown < 1 {
-            createAllyAtack(at: mage.position)
+            if isHealing {
+                makeHealEffect()
+                AllyController.shared.heal()
+            } else {
+                createAllyAtack(at: mage.position)
+            }
             AllyController.shared.mage.attackCoolDown = AllyController.shared.mage.attackCooldownResetValue
         } else {
             AllyController.shared.mage.attackCoolDown -= AllyController.shared.mage.attackSpeed
         }
+    }
+    
+    func healTeam() {
+        
     }
     
     func rangerAttack() {

@@ -10,14 +10,16 @@ import Foundation
 
 class Ally {
     var health: Int
+    var maxHealth: Int
     var attackDamage: Int
     var attackSpeed: Double
     var attackCoolDown: Double
     var attackCooldownResetValue: Double
     var stance: Bool
     
-    init(health: Int, attackDamage: Int, attackSpeed: Double, attackCoolDown: Double, attackCooldownResetValue: Double, stance: Bool) {
+    init(health: Int, maxHealth: Int, attackDamage: Int, attackSpeed: Double, attackCoolDown: Double, attackCooldownResetValue: Double, stance: Bool) {
         self.health = health
+        self.maxHealth = maxHealth
         self.attackDamage = attackDamage
         self.attackSpeed = attackSpeed
         self.attackCoolDown = attackCoolDown

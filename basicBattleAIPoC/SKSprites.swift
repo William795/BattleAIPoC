@@ -150,4 +150,13 @@ extension SKSpriteNode {
         
         return shield
     }
+    
+    func makeHealEffect(atAlly: CGPoint) -> SKSpriteNode {
+        let effect = SKSpriteNode()
+        effect.color = .systemGreen
+        effect.size = baseSize
+        effect.position = atAlly
+        
+        return effect
+    }
 }
