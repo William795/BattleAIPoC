@@ -28,6 +28,7 @@ class GameScene: SKScene {
         setUpAllys()
         createEnemy()
         makeButtons()
+        startGlobalTimer()
     }
     
     func makeButtons() {
@@ -44,9 +45,20 @@ class GameScene: SKScene {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
     }
     
+    func startGlobalTimer() {
+        let timer = SKAction.wait(forDuration: 1)
+        let timerTick = SKAction.run {
+            self.tankAttack()
+            self.mageAttack()
+            self.rangerAttack()
+        }
+        let sequence = SKAction.sequence([timer, timerTick])
+        run(SKAction.repeatForever(sequence))
+    }
+    
     func setUpAllys() {
-        createMage()
         createTank()
+        createMage()
         createRanger()
         createPlayer()
         
@@ -117,10 +129,10 @@ class GameScene: SKScene {
     func swapRangerFormation() {
         //formations be passive attacks / rapid attaks
         if AllyController.shared.ranger.stance == true {
-            AllyController.shared.ranger.attackSpeed += 3
+            AllyController.shared.ranger.attackSpeed -= 1
             AllyController.shared.ranger.stance = false
         } else {
-            AllyController.shared.ranger.attackSpeed -= 3
+            AllyController.shared.ranger.attackSpeed += 1
             AllyController.shared.ranger.stance = true
         }
     }
@@ -129,15 +141,31 @@ class GameScene: SKScene {
         //formations be dmg/healing
     }
     
-    func rangerAttack() {
-        let rangerAttackTimer = SKAction.wait(forDuration: AllyController.shared.ranger.attackSpeed)
-        let attack = SKAction.run {
-            self.createAllyAtack(at: self.ranger.position)
+    func tankAttack() {
+        if AllyController.shared.tank.attackCoolDown < 1 {
+            createAllyAtack(at: tank.position)
+            AllyController.shared.tank.attackCoolDown = AllyController.shared.tank.attackCooldownResetValue
+        } else {
+            AllyController.shared.tank.attackCoolDown -= AllyController.shared.tank.attackSpeed
         }
-        let sequence = SKAction.sequence([rangerAttackTimer, attack])
-        run(SKAction.repeat(sequence, count: 3))
-        
-        print("rangerAttack")
+    }
+    
+    func mageAttack() {
+        if AllyController.shared.mage.attackCoolDown < 1 {
+            createAllyAtack(at: mage.position)
+            AllyController.shared.mage.attackCoolDown = AllyController.shared.mage.attackCooldownResetValue
+        } else {
+            AllyController.shared.mage.attackCoolDown -= AllyController.shared.mage.attackSpeed
+        }
+    }
+    
+    func rangerAttack() {
+        if AllyController.shared.ranger.attackCoolDown < 1 {
+            createAllyAtack(at: ranger.position)
+            AllyController.shared.ranger.attackCoolDown = AllyController.shared.ranger.attackCooldownResetValue
+        } else {
+            AllyController.shared.ranger.attackCoolDown -= AllyController.shared.ranger.attackSpeed
+        }
     }
     
     func enemyDamaged() {
