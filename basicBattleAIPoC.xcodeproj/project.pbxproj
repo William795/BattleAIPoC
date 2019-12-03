@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9200A111238C8660007B9FB7 /* BattleTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200A110238C8660007B9FB7 /* BattleTimer.swift */; };
-		9200A115238C88A7007B9FB7 /* NotificationExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9200A114238C88A7007B9FB7 /* NotificationExt.swift */; };
 		92114617237A151F005507E8 /* CategoryBitMasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92114616237A151F005507E8 /* CategoryBitMasks.swift */; };
 		92114619237A15F1005507E8 /* Zpositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92114618237A15F1005507E8 /* Zpositions.swift */; };
 		92820B7E237CB51800E21EAF /* Ally.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92820B7D237CB51800E21EAF /* Ally.swift */; };
@@ -44,8 +42,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9200A110238C8660007B9FB7 /* BattleTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleTimer.swift; sourceTree = "<group>"; };
-		9200A114238C88A7007B9FB7 /* NotificationExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExt.swift; sourceTree = "<group>"; };
 		92114616237A151F005507E8 /* CategoryBitMasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBitMasks.swift; sourceTree = "<group>"; };
 		92114618237A15F1005507E8 /* Zpositions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zpositions.swift; sourceTree = "<group>"; };
 		92820B7D237CB51800E21EAF /* Ally.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ally.swift; sourceTree = "<group>"; };
@@ -94,22 +90,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9200A116238C8985007B9FB7 /* Extentions */ = {
-			isa = PBXGroup;
-			children = (
-				9200A114238C88A7007B9FB7 /* NotificationExt.swift */,
-			);
-			path = Extentions;
-			sourceTree = "<group>";
-		};
 		9211461A237A15F7005507E8 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				928F3089235FA54D00F823DE /* GameViewController.swift */,
 				92114616237A151F005507E8 /* CategoryBitMasks.swift */,
 				92114618237A15F1005507E8 /* Zpositions.swift */,
-				9200A110238C8660007B9FB7 /* BattleTimer.swift */,
-				9200A116238C8985007B9FB7 /* Extentions */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -333,10 +319,8 @@
 				92114617237A151F005507E8 /* CategoryBitMasks.swift in Sources */,
 				92820B83237CB7BB00E21EAF /* AllyController.swift in Sources */,
 				92820B7E237CB51800E21EAF /* Ally.swift in Sources */,
-				9200A115238C88A7007B9FB7 /* NotificationExt.swift in Sources */,
 				928F308A235FA54D00F823DE /* GameViewController.swift in Sources */,
 				92FF80FF2362367A0084E9A2 /* SKSprites.swift in Sources */,
-				9200A111238C8660007B9FB7 /* BattleTimer.swift in Sources */,
 				928F3082235FA54D00F823DE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

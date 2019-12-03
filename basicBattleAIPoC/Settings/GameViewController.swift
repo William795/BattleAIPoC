@@ -15,7 +15,6 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        BattleTimer.shared.startTimer()
         
         if let view = self.view as! SKView? {
             

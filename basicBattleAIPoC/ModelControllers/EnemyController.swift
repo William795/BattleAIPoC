@@ -16,18 +16,21 @@ class EnemyController {
     
     //create enemy
     
-    var enemy = Enemy(health: 50, attackDamage: 1, attackSpeed: 1, phase: 1)
+    var enemy = Enemy(health: 10, attackDamage: 1, attackSpeed: 1, phase: 1)
     
     
     func nextPhase() {
-        
+        enemy.phase += 1
     }
     
     func takeDamage() {
-        
+        enemy.health -= 1
     }
     
-    func enemyDefeatedCheck() {
-        
+    func enemyDefeatedCheck() -> Bool {
+        if enemy.health < 1 {
+            return true
+        }
+        return false
     }
 }

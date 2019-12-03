@@ -185,10 +185,6 @@ class GameScene: SKScene {
         }
     }
     
-    func healTeam() {
-        
-    }
-    
     func rangerAttack() {
         if AllyController.shared.ranger.attackCoolDown < 1 {
             createAllyAtack(at: ranger.position)
@@ -199,11 +195,17 @@ class GameScene: SKScene {
     }
     
     func enemyDamaged() {
-        //stuff and things
+        //currently all allys deals 1 dmg. This can be fixed by either making nodes equal to the attack value (probably would run into issues of scale if dmg ever gets into the 100s or 1,000+) or revamp the current attack creation methoods (which I need to do anyway in order to difrentiate between different ally attacks)
+        
+        EnemyController.shared.takeDamage()
+        gameOverCheck()
     }
     
     func gameOverCheck() {
         // check for health of player and enemy and go from there
+        if EnemyController.shared.enemyDefeatedCheck() {
+            print("game over enemy dead")
+        }
     }
     
     func allyDamaged(ally: SKSpriteNode) {
@@ -301,8 +303,6 @@ extension GameScene: SKPhysicsContactDelegate {
                 enemyDamaged()
                 attack.run(SKAction.fadeOut(withDuration: 0.5))
                 attack.removeFromParent()
-                EnemyController.shared.enemy.health -= 1
-                gameOverCheck()
             }
         default:
             print("unspecified contact made")
