@@ -13,9 +13,7 @@ class EnemyController {
     static let shared = EnemyController()
     
     //CRUD
-    
-    //create enemy
-    
+   
     var enemy = Enemy(health: 10, attackDamage: 1, attackSpeed: 1, phase: 1)
     
     

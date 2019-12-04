@@ -68,6 +68,7 @@ class GameScene: SKScene {
         let tankBlueprint = SKSpriteNode.makeTank(SKSpriteNode())
         tank = tankBlueprint()
         addChild(tank)
+        swapTankFormation()
     }
     
     func createMage() {
@@ -133,11 +134,15 @@ class GameScene: SKScene {
         if shield != nil {
             if shield.parent == self {
                 shield.removeFromParent()
-                //tank goes to attack
+                tank.run(SKAction.moveTo(x: 500, duration: 2))
+                AllyController.shared.tank.attackSpeed = 1
                 return
             }
         }
+        AllyController.shared.tank.attackSpeed = 0
         createShield()
+        tank.run(SKAction.moveTo(x: 220, duration: 2))
+        shield.run(SKAction.moveTo(x: 280, duration: 2))
         AllyController.shared.tankShield.health = 3
     }
     
@@ -146,22 +151,27 @@ class GameScene: SKScene {
         if AllyController.shared.ranger.stance == true {
             AllyController.shared.ranger.attackSpeed -= 1
             AllyController.shared.ranger.stance = false
+            ranger.run(SKAction.moveBy(x: -50, y: 50, duration: 1))
         } else {
             AllyController.shared.ranger.attackSpeed += 1
             AllyController.shared.ranger.stance = true
+            ranger.run(SKAction.moveBy(x: 50, y: -50, duration: 1))
         }
     }
     
     func swapMageFormation() {
         if AllyController.shared.mage.stance == false {
             AllyController.shared.mage.stance = true
+            mage.run(SKAction.moveBy(x: -30, y: -40, duration: 1))
         } else {
             AllyController.shared.mage.stance = false
+            mage.run(SKAction.moveBy(x: 30, y: 40, duration: 1))
         }
     }
     
     func tankAttack() {
         if AllyController.shared.tank.attackCoolDown < 1 {
+            createAllyAtack(at: tank.position)
             createAllyAtack(at: tank.position)
             AllyController.shared.tank.attackCoolDown = AllyController.shared.tank.attackCooldownResetValue
         } else {
@@ -195,7 +205,7 @@ class GameScene: SKScene {
     }
     
     func enemyDamaged() {
-        //currently all allys deals 1 dmg. This can be fixed by either making nodes equal to the attack value (probably would run into issues of scale if dmg ever gets into the 100s or 1,000+) or revamp the current attack creation methoods (which I need to do anyway in order to difrentiate between different ally attacks)
+        //currently all allys deals 1 dmg. This can be fixed by either making nodes equal to the attack value (probably would run into issues of scale if dmg ever gets into the 100s or 1,000+(but thats unlikely)) or revamp the current attack creation methoods (which I need to do anyway in order to difrentiate between different ally attacks)
         
         EnemyController.shared.takeDamage()
         gameOverCheck()
