@@ -21,8 +21,8 @@ class EnemyController {
         enemy.phase += 1
     }
     
-    func takeDamage() {
-        enemy.health -= 1
+    func takeDamage(amount: Int) {
+        enemy.health -= amount
     }
     
     func enemyDefeatedCheck() -> Bool {

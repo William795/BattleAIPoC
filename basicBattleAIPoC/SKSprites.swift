@@ -92,7 +92,22 @@ extension SKSpriteNode {
         return attack
     }
     
-    func makeAllyAttack(atLocation: CGPoint) -> SKSpriteNode {
+    func makeTankAttack(atLocation: CGPoint) -> SKSpriteNode {
+        let attack = SKSpriteNode()
+        attack.name = "allyAttack"
+        attack.color = .orange
+        attack.size = CGSize(width: baseSize.width / 4, height: baseSize.height / 8)
+        attack.position = atLocation
+        attack.physicsBody = SKPhysicsBody(circleOfRadius: baseSize.width / 2)
+        attack.physicsBody?.affectedByGravity = false
+        attack.physicsBody?.categoryBitMask = PhysicsCategorys.tankAttack
+        attack.physicsBody?.contactTestBitMask = PhysicsCategorys.enemy
+        attack.physicsBody?.collisionBitMask = PhysicsCategorys.none
+        
+        return attack
+    }
+    
+    func makeMageAttack(atLocation: CGPoint) -> SKSpriteNode {
         let attack = SKSpriteNode()
         attack.name = "allyAttack"
         attack.color = .cyan
@@ -100,7 +115,37 @@ extension SKSpriteNode {
         attack.position = atLocation
         attack.physicsBody = SKPhysicsBody(circleOfRadius: baseSize.width / 2)
         attack.physicsBody?.affectedByGravity = false
-        attack.physicsBody?.categoryBitMask = PhysicsCategorys.allyAttack
+        attack.physicsBody?.categoryBitMask = PhysicsCategorys.mageAttack
+        attack.physicsBody?.contactTestBitMask = PhysicsCategorys.enemy
+        attack.physicsBody?.collisionBitMask = PhysicsCategorys.none
+        
+        return attack
+    }
+    
+    func makeRangerAttack(atLocation: CGPoint) -> SKSpriteNode {
+        let attack = SKSpriteNode()
+        attack.name = "allyAttack"
+        attack.color = .green
+        attack.size = CGSize(width: baseSize.width / 4, height: baseSize.height / 8)
+        attack.position = atLocation
+        attack.physicsBody = SKPhysicsBody(circleOfRadius: baseSize.width / 2)
+        attack.physicsBody?.affectedByGravity = false
+        attack.physicsBody?.categoryBitMask = PhysicsCategorys.rangerAttack
+        attack.physicsBody?.contactTestBitMask = PhysicsCategorys.enemy
+        attack.physicsBody?.collisionBitMask = PhysicsCategorys.none
+        
+        return attack
+    }
+    
+    func makePlayerAttack(atLocation: CGPoint) -> SKSpriteNode {
+        let attack = SKSpriteNode()
+        attack.name = "allyAttack"
+        attack.color = .white
+        attack.size = CGSize(width: baseSize.width / 4, height: baseSize.height / 8)
+        attack.position = atLocation
+        attack.physicsBody = SKPhysicsBody(circleOfRadius: baseSize.width / 2)
+        attack.physicsBody?.affectedByGravity = false
+        attack.physicsBody?.categoryBitMask = PhysicsCategorys.playerAttack
         attack.physicsBody?.contactTestBitMask = PhysicsCategorys.enemy
         attack.physicsBody?.collisionBitMask = PhysicsCategorys.none
         

@@ -101,9 +101,26 @@ class GameScene: SKScene {
         addChild(attack)
     }
     
-    func createAllyAtack(at AllyPosition: CGPoint) {
-        let attack = SKSpriteNode().makeAllyAttack(atLocation: AllyPosition)
-        attack.physicsBody?.velocity = CGVector(dx: enemy.position.x - AllyPosition.x, dy: enemy.position.y - AllyPosition.y)
+    func createAllyAtack(for ally: SKSpriteNode) {
+        var attack = SKSpriteNode()
+        
+        switch ally.name {
+        case "tank":
+            attack = SKSpriteNode().makeTankAttack(atLocation: ally.position)
+            attack.physicsBody?.velocity = CGVector(dx: enemy.position.x - ally.position.x, dy: enemy.position.y - ally.position.y)
+        case "mage":
+            attack = SKSpriteNode().makeMageAttack(atLocation: ally.position)
+            attack.physicsBody?.velocity = CGVector(dx: enemy.position.x - ally.position.x, dy: enemy.position.y - ally.position.y)
+        case "ranger":
+            attack = SKSpriteNode().makeRangerAttack(atLocation: ally.position)
+            attack.physicsBody?.velocity = CGVector(dx: enemy.position.x - ally.position.x, dy: enemy.position.y - ally.position.y)
+        case "player":
+            attack = SKSpriteNode().makePlayerAttack(atLocation: ally.position)
+            attack.physicsBody?.velocity = CGVector(dx: enemy.position.x - ally.position.x, dy: enemy.position.y - ally.position.y)
+        default:
+            print("create ally attack default hit")
+            return
+        }
         
         addChild(attack)
     }
@@ -171,8 +188,7 @@ class GameScene: SKScene {
     
     func tankAttack() {
         if AllyController.shared.tank.attackCoolDown < 1 {
-            createAllyAtack(at: tank.position)
-            createAllyAtack(at: tank.position)
+            createAllyAtack(for: tank)
             AllyController.shared.tank.attackCoolDown = AllyController.shared.tank.attackCooldownResetValue
         } else {
             AllyController.shared.tank.attackCoolDown -= AllyController.shared.tank.attackSpeed
@@ -187,7 +203,7 @@ class GameScene: SKScene {
                 makeHealEffect()
                 AllyController.shared.heal()
             } else {
-                createAllyAtack(at: mage.position)
+                createAllyAtack(for: mage)
             }
             AllyController.shared.mage.attackCoolDown = AllyController.shared.mage.attackCooldownResetValue
         } else {
@@ -197,17 +213,15 @@ class GameScene: SKScene {
     
     func rangerAttack() {
         if AllyController.shared.ranger.attackCoolDown < 1 {
-            createAllyAtack(at: ranger.position)
+            createAllyAtack(for: ranger)
             AllyController.shared.ranger.attackCoolDown = AllyController.shared.ranger.attackCooldownResetValue
         } else {
             AllyController.shared.ranger.attackCoolDown -= AllyController.shared.ranger.attackSpeed
         }
     }
     
-    func enemyDamaged() {
-        //currently all allys deals 1 dmg. This can be fixed by either making nodes equal to the attack value (probably would run into issues of scale if dmg ever gets into the 100s or 1,000+(but thats unlikely)) or revamp the current attack creation methoods (which I need to do anyway in order to difrentiate between different ally attacks)
-        
-        EnemyController.shared.takeDamage()
+    func enemyDamaged(from ally: Ally) {
+        EnemyController.shared.takeDamage(amount: ally.attackDamage)
         gameOverCheck()
     }
     
@@ -268,16 +282,16 @@ class GameScene: SKScene {
             case "tank":
                 //speed up
                 print("tank")
-                createAllyAtack(at: tank.position)
+                createAllyAtack(for: tank)
             case "ranger":
                 //speed up
                 print("ranger")
-                createAllyAtack(at: ranger.position)
+                createAllyAtack(for: ranger)
                 rangerAttack()
             case "mage":
                 //speed up
                 print("mage")
-                createAllyAtack(at: mage.position)
+                createAllyAtack(for: mage)
             case "enemy":
                 //slow down
                 print("enemy")
@@ -307,10 +321,31 @@ extension GameScene: SKPhysicsContactDelegate {
             }
             
             print("Ally hit")
-        case PhysicsCategorys.allyAttack | PhysicsCategorys.enemy:
-            print("enemy hit")
+        case PhysicsCategorys.tankAttack | PhysicsCategorys.enemy:
+            print("enemy hit by tank")
             if let attack = contact.bodyA.node?.name == "allyAttack" ? contact.bodyA.node as? SKSpriteNode : contact.bodyB.node as? SKSpriteNode {
-                enemyDamaged()
+                enemyDamaged(from: AllyController.shared.tank)
+                attack.run(SKAction.fadeOut(withDuration: 0.5))
+                attack.removeFromParent()
+            }
+        case PhysicsCategorys.mageAttack | PhysicsCategorys.enemy:
+            print("enemy hit by mage")
+            if let attack = contact.bodyA.node?.name == "allyAttack" ? contact.bodyA.node as? SKSpriteNode : contact.bodyB.node as? SKSpriteNode {
+                enemyDamaged(from: AllyController.shared.mage)
+                attack.run(SKAction.fadeOut(withDuration: 0.5))
+                attack.removeFromParent()
+            }
+            case PhysicsCategorys.rangerAttack | PhysicsCategorys.enemy:
+            print("enemy hit by ranger")
+            if let attack = contact.bodyA.node?.name == "allyAttack" ? contact.bodyA.node as? SKSpriteNode : contact.bodyB.node as? SKSpriteNode {
+                enemyDamaged(from: AllyController.shared.ranger)
+                attack.run(SKAction.fadeOut(withDuration: 0.5))
+                attack.removeFromParent()
+            }
+            case PhysicsCategorys.playerAttack | PhysicsCategorys.enemy:
+            print("enemy hit by player")
+            if let attack = contact.bodyA.node?.name == "allyAttack" ? contact.bodyA.node as? SKSpriteNode : contact.bodyB.node as? SKSpriteNode {
+                enemyDamaged(from: AllyController.shared.player)
                 attack.run(SKAction.fadeOut(withDuration: 0.5))
                 attack.removeFromParent()
             }
